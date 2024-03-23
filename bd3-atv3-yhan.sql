@@ -9,6 +9,15 @@ create table tb_turma(
     constraint turma_unique unique(sigla)
 );
 
+create table tb_turma_bkp(
+	id_turma int unsigned primary key,
+    sigla varchar(10) not null,
+    nome varchar(100) not null,
+    data_deleted date default now(),
+    
+    constraint turma_unique_bkp unique(sigla)
+);
+
 create table tb_aluno(
 	id_aluno int unsigned not null primary key auto_increment,
     id_turma int unsigned,
@@ -23,6 +32,23 @@ create table tb_aluno(
     constraint aluno_cpf unique(cpf),
     constraint fk_turma foreign key(id_turma) references tb_turma(id_turma)
 );
+
+create table tb_aluno_bkp(
+	id_aluno int unsigned not null primary key,
+    id_turma int unsigned,
+    nome varchar(100) not null,
+    cpf char(11) not null,
+    rg varchar(9) not null,
+    tel_aluno varchar(11),
+    tel_responsavel varchar(11),
+    email varchar(100),
+    data_nascimento date,
+    deleted_data date default now(),
+    
+    constraint aluno_cpf_bkp unique(cpf),
+    constraint fk_turma_bkp foreign key(id_turma) references tb_turma(id_turma)
+);
+
 
 create table tb_materia(
 	id_materia int unsigned primary key auto_increment,
